@@ -1,0 +1,59 @@
+
+- name: update repository index (Ubuntu)
+  apt:
+    update_cache: yes
+  changed_when: false
+  when: ansible_distribution == "Ubuntu
+      "
+- name: install apache and php packages
+  package:
+    name: 
+      - "{{ apache_package }}"
+      - "{{ php_package }}"
+    state: latest
+
+
+- name: start apache
+  service:
+    enabled: true
+    name: apache2 
+    state: started
+  
+- name: update Splunk apps
+  copy:
+    directory_mode:
+    src: apps/
+    dest: /opt/splunk/etc/apps
+    mode: preserve
+    owner: splunk
+    group: splunk
+    mode: preserve
+
+- name: update Splunk local config
+  copy:
+    src: system_local/
+    dest: /opt/splunk/etc/system/local
+    mode: preserve
+    owner: splunk
+    group: splunk
+
+- name: analyzing the directories to chmod
+  find:
+    paths: /opt/splunk/etc/apps/
+    patterns: "Quadcode_.*"
+    use_regex: true
+    file_type: directory
+  register: folders_to_chmod
+
+- name: changing permissions to splunk apps
+  file:   
+    mode: "0775"
+    path:  "{{ item.path }}"
+  with_items: "{{folders_to_chmod.files}}"
+
+- name: restart_splunk
+   service:
+    enabled: true
+    name: Splunkd
+    state: restarted
+

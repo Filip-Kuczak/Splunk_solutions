@@ -1,0 +1,12 @@
+---
+ 
+- hosts: all
+  become: true
+  roles:
+    - base
+    
+ 
+- hosts: splunk_servers
+  become: true
+  roles:
+    - splunk_all_in_one

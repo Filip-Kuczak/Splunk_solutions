@@ -1,0 +1,21 @@
+---
+# This playbook deploys a basic Splunk Enterprise (Core) installation
+
+- name: copy ssh_keys_for_ansible_user
+  hosts: splunk_server_1
+  become: true
+  roles:
+    - base
+
+- name: Apply prereqs to all nodes
+  hosts: splunk_server_1 
+  gather_facts: no
+  roles:
+    - prereqs
+
+- name: Install Splunk
+  hosts: splunk_server_1
+  roles:
+    - core-install
+
+
