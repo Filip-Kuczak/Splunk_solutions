@@ -52,7 +52,7 @@
   with_items: "{{folders_to_chmod.files}}"
 
 - name: restart_splunk
-   service:
+  service:
     enabled: true
     name: Splunkd
     state: restarted
