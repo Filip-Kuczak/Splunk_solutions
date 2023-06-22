@@ -1,0 +1,3 @@
+[inputs/script%3A%2F%2F%24SPLUNK_HOME%2Fetc%2Fapps%2FQuadcode_blocklist_monitor%2Fbin%2Fblocklist.py]
+version = 8.2.9
+modtime = 1687293176.112595000

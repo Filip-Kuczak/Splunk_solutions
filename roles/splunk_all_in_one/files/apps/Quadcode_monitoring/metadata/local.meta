@@ -1,0 +1,6 @@
+[savedsearches/IPv6%20detected]
+access = read : [ * ], write : [ * ]
+export = none
+owner = admin
+version = 8.2.9
+modtime = 1687300754.203091000
