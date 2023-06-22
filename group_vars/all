@@ -11,7 +11,7 @@
 # Remote host username, password, enable password, and SSH private key file (default method)
 #   If one of ssh_pass, become_pass (sudo), and private_key are not needed, 
 #   comment them out based on your authentication method.
-ansible_user: simone
+#ansible_user: simone
 # ansible_ssh_pass: samplePassword
 # ansible_become_pass: samplePassword
 ansible_ssh_private_key_file: ~/.ssh/ansible

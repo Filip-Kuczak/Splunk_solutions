@@ -1,0 +1,8 @@
+---
+
+- name: copy ssh_keys_for_ansible_user
+  hosts: splunk_server_1
+  become: true
+  roles:
+    - base
+

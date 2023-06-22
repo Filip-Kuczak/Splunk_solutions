@@ -1,4 +1,4 @@
-[splunk_servers]
+[web_servers]
 192.168.100.4 apache_package=apache2 php_package=libapache2-mod-php
 192.168.100.5 apache_package=apache2 php_package=libapache2-mod-php
 
@@ -6,4 +6,4 @@
 192.168.100.3 
 
 [splunk_server_1]
-192.168.100.4 apache_package=apache2 php_package=libapache2-mod-php
+192.168.100.6 apache_package=apache2 php_package=libapache2-mod-php

@@ -27,7 +27,6 @@
     mode: preserve
     owner: splunk
     group: splunk
-    mode: preserve
 
 - name: update Splunk local config
   copy:
