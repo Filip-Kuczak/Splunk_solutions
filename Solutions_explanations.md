@@ -30,12 +30,6 @@ ansible-playbook ansible_setup.yml --ask-become-pass
 
 b. Installing splunk and Linux prerequisites on remote server(s). To install Splunk and Linux prerequisites install.yml  playbook will be used. This is slightly modified version of playbook created and shared on https://github.com/johnmcgovern/ansible-splunk-base . Unfortunately Splunk version 8.2.9 on Ubuntu 22.04.2 has problem related with Linux cgroups (https://community.splunk.com/t5/Installation/Why-is-Systemd-broken-on-new-install/td-p/482881), to fix that I changed line 215 in core-instalation playbook. To install splunk with all Linux prerequisites issue that command on ansible server:
 
-![Script execution](https://github.com/Filip-Kuczak/Splunk_solutions/assets/77390537/77140973-bb64-49cb-a4ff-2f4125f6216c)
-
-![blocklist_monitor 2 ](https://github.com/Filip-Kuczak/Splunk_solutions/assets/77390537/7bd69b5f-897b-4dab-8923-6f8618e33917)
-
-
-
 ansible-playbook install.yml -u simone         (optionally line 14 in /Splunk_solutions/group_vars/all could be uncommented, after that -u flag will not be needed in 
 further executions)
 
@@ -47,7 +41,16 @@ General approach(proposed as a solutions) on how to maintain and control splunk 
 
 a. TCP/UDP inputs - to represent this Quadcode_syslod_inputs app was created. Iside there are simle tcp input in inputs.conf and index syslog_data. Data source is set to default splunk syslog.
 
-b. (TASK 2)For REST API inputs Quadcode_blocklist_monitor app was created. Splunk will fire blocklist.py scripy every 3600 (1 hour) . For this input custom sourcetype was creted (blocklist). As collected data consisits only of ip addresses I created realy simple props.conf to create line breaking and transforms.conf to demostrated potential regex usage. In props simple eval was used to show how to create calculated fields. Below is the screenshot of indexed data from scripted input. 
+b. (TASK 2)For REST API inputs Quadcode_blocklist_monitor app was created. Splunk will fire blocklist.py scripy every 3600 (1 hour) . For this input custom sourcetype was creted (blocklist). As collected data consisits only of ip addresses I created realy simple props.conf to create line breaking and transforms.conf to demostrated potential regex usage. In props simple eval was used to show how to create calculated fields. Below is the screenshot of indexed data from scripted input:
+
+![Script execution](https://github.com/Filip-Kuczak/Splunk_solutions/assets/77390537/77140973-bb64-49cb-a4ff-2f4125f6216c)
+
+![blocklist_monitor 2 ](https://github.com/Filip-Kuczak/Splunk_solutions/assets/77390537/7bd69b5f-897b-4dab-8923-6f8618e33917)
+
+splunkd log screenshot (scripted input evidence):
+
+![Script execution](https://github.com/Filip-Kuczak/Splunk_solutions/assets/77390537/fdfff6b1-f7f3-411c-a47b-3ab821e972d0)
+
 
 As for the script itself it is realy simple python code that checks current time and substracts 3600 from it. Then epoch value of current time - 3600 seconds is provide as argument for time= parameter in blocklit api. 
 
