@@ -68,7 +68,7 @@ b. Naming convention is that names always start with Quadcode_
 c. Configs are modified within ansible role and then deployed with ansible playbook splunk_all_in_one.yml
 d. Users keep config in sync with git repo. 
 e. If for some reasons any changes needs to be done within $SPLUNK_HOME/etc/system/local then it should be stored in system_local directory within ansible role and managed via ansible
-
+f. General configs like splunk users and roles(authorize.conf , authentication.conf) should also be kept in separate apps/app, this will help with server restoration/migration.              
 APP MANAGEMENT
 
 The system for managing apps is really simple. Ansible will copy all apps that from splunk_all_in_one role /files/apps and /files/system_local to $SPLUNK_HOME/etc/apps and $SPLUNK_HOME/etc/system/local, by that the old version will be replaced by most recent version from git and splunk config will be always in sync with git. Ansible role will also take care of assigning poprer user, group and files/directories permissions. The potential disadvantage of this solution is the fact that we don't have control over deleted apps. For example if an app is deleted from git/ansible, then the last version will remain on splunk server. The solution might be to delete it manually or add an additional step to ansible role which will delete all apps starting from Quadcode_ and then put the newest versions (it won't be dangerous because splunk will start using new configurations only after restart). The second solution is less efficient, that's why it should be discussed before potential implementation.
@@ -89,4 +89,4 @@ If external storage is used, the connectivity between the new server and storage
 
 Using this method is relatively fast and safe to migrate splunk all_in_one server to another machine. After installing splunk and prerequisites Engineer should log in and check if splunk works as expected, then if all requirements mentioned above are met, the dnsnaeme/ip address of new server should be added in splunk server1 stanza in inventory file from Splunk_solutions repo. After checking if everything is working fine, dns name should be switched to the new server. The potential risk is relatively small because we can have two servers running simultaneously until we are sure that everything works as it should.
 
-
+What is out of scope for this task( but essential to consider) is how to handle migration and management of heavy knowledge objects like lookups and/or dashboards. As this is not the subject for this particular exercise I skipped that aspect, but for real-life example, solution for that should be provided. The same for installing all the same TA's and apps from Splunk-base on new server. The process of deploying the same set of Splunk-base Apps/TAs on a new server should be automated as well. 
