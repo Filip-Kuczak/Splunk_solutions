@@ -24,7 +24,7 @@
     directory_mode:
     src: apps/
     dest: /opt/splunk/etc/apps
-    mode: preserve
+    mode: "0750"
     owner: splunk
     group: splunk
 
@@ -32,7 +32,7 @@
   copy:
     src: system_local/
     dest: /opt/splunk/etc/system/local
-    mode: preserve
+    mode: "0750"
     owner: splunk
     group: splunk
 
